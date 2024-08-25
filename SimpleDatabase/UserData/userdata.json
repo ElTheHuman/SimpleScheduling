@@ -1,0 +1,19 @@
+[
+    {"fel@gmail.com": {
+        "password": "password",
+        "name": "Felikz",
+        "position": "Product Specialist",
+        "position_code": 0,
+        "region": "Jakarta",
+        "district": "Jakarta Utara"
+    }},
+
+    {"el@gmail.com": {
+        "password": "password",
+        "name": "Eliana S.",
+        "position": "District Manager",
+        "position_code": 1,
+        "region": "Jakarta",
+        "district": "Jakarta Utara"
+    }}
+]
