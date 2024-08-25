@@ -22,3 +22,21 @@
     flex-direction: column;
     gap: 1vh;
 }
+
+.Profile__sign-out {
+    border: 2px solid cornflowerblue;
+    padding: 1vh;
+    cursor: pointer;
+    font-family: Inter;
+    font-weight: 500;
+    color: red;
+    border-radius: 1vh;
+    width: 40%;
+    margin: auto;
+    transition: 0.15s ease-in-out;
+}
+
+.Profile__sign-out:hover {
+    color: maroon;
+    background-color: dodgerblue;
+}

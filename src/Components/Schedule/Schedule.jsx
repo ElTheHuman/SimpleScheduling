@@ -1,31 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Papa from 'papaparse';
 import './Schedule.css';
 
-const Schedule = ({ user }) => {
+const Schedule = ({ user, schedule, setSchedule }) => {
 
-    const [schedule, setSchedule] = useState([]);
-    const [scheduleHeader, setScheduleHeader] = useState([]);
     const [canApprove, setCanApprove] = useState(false);
     const [canAddSchedule, setCanAddSchedule] = useState(false);
-    const schedulePath = '../../SimpleDatabase/Schedules/schedules.csv';
-
-
+    const scheduleHeader = schedule.length ? Object.keys(schedule[0]) : null;
+    
     useEffect(() => {
-
-        // Get schedules
-        fetch(schedulePath)
-        .then(response => response.text())
-        .then(scheduleString => {
-            Papa.parse(scheduleString, {
-                header:true,
-                delimiter: ';',
-                complete: (result) => {
-                    setSchedule(result.data);
-                    setScheduleHeader(Object.keys(result.data[0]))
-                }
-            })
-        });
 
         // Get permissions based on role
 
@@ -40,7 +24,7 @@ const Schedule = ({ user }) => {
     }, [user.position_code]);
 
     const handleApprovalChange = (id) => {
-        setSchedule(schedule => schedule.map(scheduleMap => scheduleMap.id === id ? {...scheduleMap, Approved: scheduleMap.Approved == 'Approved' ? 'Not Approved' : 'Approved'} : scheduleMap));
+        setSchedule(schedule => schedule.map(scheduleMap => scheduleMap.id === id ? {...scheduleMap, Approval: scheduleMap.Approval == 'Approved' ? 'Not Approved' : 'Approved'} : scheduleMap));
     }
     
     return (
@@ -48,22 +32,31 @@ const Schedule = ({ user }) => {
             <div className="Schedule__container">
                 <div className="Schedule__header-container">
                     <div className="Schedule__header">Schedules</div>
-                    {canAddSchedule && <button className="Schedule__add-schedule">Add schedule</button>}
+                    {canAddSchedule && <Link to={'/add-schedule'} className="Schedule__routing"><button className="Schedule__add-schedule">Add schedule</button></Link>}
                 </div>
                 <div className="Schedule__content">
                     <table className="Schedule__table">
                         <tbody>
                             <tr>
-                                {scheduleHeader.map((header, index) => (
-                                    <th key={index} className="Schedule__table--header">{header}</th>
-                                ))}
+                                {scheduleHeader && scheduleHeader.map((header, colIndex) => {
+                                    if (header == 'id' || header == 'District' || header == 'Region') {
+                                        return;
+                                    }
+                                    return <th key={colIndex} className="Schedule__table--header">{header}</th>
+                                })}
                                 {canApprove && <th className="Schedule__table--header">Action</th>}
                             </tr>
                             {schedule.map((row, rowIndex) => (
                                 <tr key={rowIndex}>
-                                    {scheduleHeader.map((header, colIndex) => (
-                                        <td key={colIndex} className="Schedule__table--desc">{row[header]}</td>
-                                    ))}
+                                    {scheduleHeader.map((header, colIndex) => {
+                                        if (header == 'id' || header == 'District' || header == 'Region') {
+                                            return;
+                                        }
+                                        if (header == 'Approval') {
+                                            return <td key={colIndex} className={"Schedule__table--desc " + (row[header] == 'Approved' ? "Schedule__approval--approved": "Schedule__approval--not-approved")}>{row[header]}</td>
+                                        }
+                                        return <td key={colIndex} className="Schedule__table--desc">{row[header]}</td>
+                                    })}
                                     {canApprove && <td className="Schedule__table--desc"><button onClick={() => handleApprovalChange(row.id)} className="Schedule__approval-change">Change Approval</button></td>}
                                 </tr>
                             ))}

@@ -9,7 +9,6 @@ const SignIn = ({ setUserData }) => {
     const [password, setPassword] = useState('');
     const [showError, setShowError] = useState(false);
     const navigateTo = useNavigate();
-    const [user, setUser] = useState({});
     const userDataPath = '/SimpleDatabase/UserData/userdata.json';
 
     const handleSubmit = (e) => {
@@ -20,26 +19,22 @@ const SignIn = ({ setUserData }) => {
         
         // Linear search for searching user data
 
-        fetch(userDataPath) // fetching user data
-        .then(response => response.text())
-        .then(userDataString => JSON.parse(userDataString))
+        fetch(userDataPath) // Fetching user data
+        .then(response => response.text()) // Get user data in string
+        .then(userDataString => JSON.parse(userDataString)) // Transform user data from string to object or json
         .then(userData => {
             for (let i = 0; i < userData.length; i++) {
                 if (userData[i][email] && !userData[i][email]['password'].localeCompare(password)) {
                     // skip password collection
                     const {password, ...data} = userData[i][email];
-                    setUser(data);
                     setUserData(data);
+                    navigateTo('/dashboard');
+                    return;
                 }
             }
         })
 
-        if (!user) {
-            setShowError(true);
-            return;
-        }
-        
-        navigateTo('/dashboard');
+        setShowError(true);
 
     }
 
