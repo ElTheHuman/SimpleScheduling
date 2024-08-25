@@ -1,16 +1,15 @@
 import React from "react";
 import Profile from "../Profile/Profile.jsx";
+import Schedule from "../Schedule/Schedule.jsx";
 import './Dashboard.css';
 
-const Dashboard = () => {
+const Dashboard = ({ user }) => {
 
     return (
         <div className="Dashboard">
             <div className="Dashboard__container">
-                <div className="Dashboard__schedule">
-                    schedule
-                </div>
-                <Profile />
+                <Schedule user={user}/>
+                <Profile user={user}/>
             </div>
         </div>
     )

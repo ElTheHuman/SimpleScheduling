@@ -1,37 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert } from "@mui/material";
-import UserData from '../../SimpleDatabase/UserData/userdata.json';
 import './SignIn.css'
 import { useNavigate } from "react-router-dom";
 
-const SignIn = () => {
+const SignIn = ({ setUserData }) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showError, setShowError] = useState(false);
     const navigateTo = useNavigate();
+    const [user, setUser] = useState({});
+    const userDataPath = '/SimpleDatabase/UserData/userdata.json';
 
     const handleSubmit = (e) => {
 
         e.preventDefault();
 
         setShowError(false);
-
+        
         // Linear search for searching user data
-        let user;
-        for (let i = 0; i < UserData.length; i++) {
-            if (UserData[i][email] && !UserData[i][email]['password'].localeCompare(password)) {
-                // skip password collection
-                const {password, ...data} = UserData[i][email];
-                user = data;
+
+        fetch(userDataPath) // fetching user data
+        .then(response => response.text())
+        .then(userDataString => JSON.parse(userDataString))
+        .then(userData => {
+            for (let i = 0; i < userData.length; i++) {
+                if (userData[i][email] && !userData[i][email]['password'].localeCompare(password)) {
+                    // skip password collection
+                    const {password, ...data} = userData[i][email];
+                    setUser(data);
+                    setUserData(data);
+                }
             }
-        }
+        })
 
         if (!user) {
             setShowError(true);
             return;
         }
-
+        
         navigateTo('/dashboard');
 
     }

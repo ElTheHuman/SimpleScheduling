@@ -11,8 +11,8 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path='/' exact element={<SignIn />}/>
-        <Route path='/dashboard' element={<Dashboard />}/>
+        <Route path='/' exact element={<SignIn setUserData={setUser}/>}/>
+        <Route path='/dashboard' element={<Dashboard user={user}/>}/>
       </Routes>
     </>
   )

@@ -1,14 +1,12 @@
 .Dashboard {
     width: 100vw;
+    height: 100vh;
     margin: 0;
 }
 
 .Dashboard__container {
+    height: inherit;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-}
-
-.Dashboard__schedule {
-    color: red;
 }
