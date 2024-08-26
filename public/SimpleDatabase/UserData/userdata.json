@@ -1,11 +1,20 @@
 [
     {"fel@gmail.com": {
         "password": "password",
-        "name": "Felikz",
+        "name": "Felz",
         "position": "Product Specialist",
         "position_code": 0,
         "region": "Jakarta",
         "district": "Jakarta Utara"
+    }},
+
+    {"lik@gmail.com": {
+        "password": "password",
+        "name": "Likz",
+        "position": "Product Specialist",
+        "position_code": 0,
+        "region": "Jakarta",
+        "district": "Jakarta Selatan"
     }},
 
     {"el@gmail.com": {
@@ -16,4 +25,5 @@
         "region": "Jakarta",
         "district": "Jakarta Utara"
     }}
+    
 ]

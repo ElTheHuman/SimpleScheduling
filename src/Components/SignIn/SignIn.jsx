@@ -9,7 +9,7 @@ const SignIn = ({ setUserData }) => {
     const [password, setPassword] = useState('');
     const [showError, setShowError] = useState(false);
     const navigateTo = useNavigate();
-    const userDataPath = '/SimpleDatabase/UserData/userdata.json';
+    const userDataPath = '/SimpleScheduling/SimpleDatabase/UserData/userdata.json';
 
     const handleSubmit = (e) => {
 

@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Papa from 'papaparse';
 import './Schedule.css';
 
 const Schedule = ({ user, schedule, setSchedule }) => {
 
     const [canApprove, setCanApprove] = useState(false);
     const [canAddSchedule, setCanAddSchedule] = useState(false);
-    const scheduleHeader = schedule.length ? Object.keys(schedule[0]) : null;
+    const viewableSchedule = schedule.filter(data => data.District === user.district);
+    const scheduleHeader = viewableSchedule.length ? Object.keys(viewableSchedule[0]) : null;
     
     useEffect(() => {
 
         // Get permissions based on role
 
-        if (user.position_code == 0) {
+        if (user.position_code == 0) { // Product Specialist
             setCanAddSchedule(true);
             setCanApprove(false);
-        } else if (user.position_code <= 2) {
+        } else if (user.position_code <= 2) { // District Manager and Regional Sales Manager
             setCanAddSchedule(false);
             setCanApprove(true);
         }
@@ -46,7 +46,7 @@ const Schedule = ({ user, schedule, setSchedule }) => {
                                 })}
                                 {canApprove && <th className="Schedule__table--header">Action</th>}
                             </tr>
-                            {schedule.map((row, rowIndex) => (
+                            {viewableSchedule.map((row, rowIndex) => (
                                 <tr key={rowIndex}>
                                     {scheduleHeader.map((header, colIndex) => {
                                         if (header == 'id' || header == 'District' || header == 'Region') {

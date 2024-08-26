@@ -12,8 +12,8 @@ const AddSchedule = ({ onSubmit, currentLength, user }) => {
     const [selectedProduct, setSelectedProduct] = useState('Select product');
     const [date, setDate] = useState();
     const [time, setTime] = useState(); //dummy time, can be used as the getClient() input
-    const clientPath = '/SimpleDatabase/Client/client.json';
-    const productPath = '/SimpleDatabase/Product/product.json';
+    const clientPath = '/SimpleScheduling/SimpleDatabase/Client/client.json';
+    const productPath = '/SimpleScheduling/SimpleDatabase/Product/product.json';
     const [Client, setClient] = useState();
     const [Product, setProduct] = useState();
     const navigateTo = useNavigate();
